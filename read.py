@@ -3,12 +3,13 @@ import pprint
 from str2dict import convert
 from topology import Graph
 from algorithms.queues import queue
+import math
 
 client = pymongo.MongoClient("mongodb+srv://Shantom:134558@paradise-39qvg.mongodb.net/test?retryWrites=true")
 db = client.test
 coll = db.test
 
-g = Graph('E', 1)
+g = Graph('花圃', 1)
 q = queue.ArrayQueue()
 q.enqueue(g.product)
 
@@ -25,13 +26,31 @@ while not q.is_empty():
     tool = doc['tool']
 
     for item in ings:
-        weight = parent.wt // count * item['count']
+        weight = math.ceil(parent.wt / count) * item['count']
         node = g.add_node(item['name'], weight)
         g.add_edge(item['name'], parent.name, weight, tool)
         if node not in q._array:
             q.enqueue(node)
 
-for edge in g.edges:
-    print(edge)
+steps=[]
+for node in g.nodes:
+    step = [edge for edge in g.edges if node == edge.nt]
+    
+    if step:
+        product = step[0].nt
+        tool = step[0].tool
+        ings = []
+        for item in step:
+            ing = '{0}个{1}'.format(item.wt, item.nf.name)
+            ings.append(ing)
+        ings = ', '.join(ings)
+
+        step = '工具：{0}, 成品：{1}, 原料：{2}'.format(tool, product, ings)
+   
+        steps.append(step)
+
+steps=steps[::-1]
+pprint.pprint(steps)
+
 
 print(basicIngs)

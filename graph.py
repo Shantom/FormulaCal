@@ -74,7 +74,7 @@ class DirectedGraph(object):
                 for w in load_dict[v]:
                     node_to = self.add_node(w)
                     self.adjmt[node_from].append(node_to)
-                    self.add_edge(v, w, 0)
+                    self.add_edge(v, w, 0, None)
 
     def add_node(self, node_name, weight = 0):
         try:
