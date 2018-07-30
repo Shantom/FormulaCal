@@ -8,15 +8,17 @@ client = pymongo.MongoClient("mongodb+srv://Shantom:134558@paradise-39qvg.mongod
 db = client.test
 coll = db.test
 
-g = Graph('花圃', 1)
+g = Graph('E', 1)
 q = queue.ArrayQueue()
 q.enqueue(g.product)
 
+basicIngs=[]
 while not q.is_empty():
     parent = q.dequeue()
 
     doc = coll.find_one({'product':parent.name})
     if not doc: # final ings
+        basicIngs.append(parent)
         continue
     ings = doc['ingredients']
     count = int(doc['count'])
@@ -31,3 +33,5 @@ while not q.is_empty():
 
 for edge in g.edges:
     print(edge)
+
+print(basicIngs)
