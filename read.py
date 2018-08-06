@@ -9,7 +9,7 @@ client = pymongo.MongoClient("mongodb+srv://Shantom:134558@paradise-39qvg.mongod
 db = client.test
 coll = db.test
 
-g = Graph('花圃', 1)
+g = Graph('箱箱草', 1)
 q = queue.ArrayQueue()
 q.enqueue(g.product)
 
@@ -50,7 +50,9 @@ for node in g.nodes:
         steps.append(step)
 
 steps=steps[::-1]
+
+print('所有原料：', basicIngs)
+
 pprint.pprint(steps)
 
 
-print(basicIngs)

@@ -10,10 +10,13 @@ coll = db.test
 formulas=[]
 with open('配方.txt') as file:
       for line in file:
-            formulas.append(convert(line))
+            try:
+                  coll.insert_one(convert(line))
+            except pymongo.errors.DuplicateKeyError:
+                  pass
 
 
-coll.insert_many(formulas)
+# coll.insert_many(formulas)
 
 
 
